@@ -7,7 +7,6 @@ export const actions = async (request: Request) => {
     // const eventType = request.event.type;
     // const user_id = request.event.user,
     const parsedData = JSON.parse(request.payload);
-    console.log(request);
 
     if (
         parsedData.actions &&

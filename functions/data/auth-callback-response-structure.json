@@ -1,0 +1,23 @@
+{
+    "ok": true,
+    "app_id": "A041J6MJGSV",
+    "authed_user": {
+      "id": "U040MMKRX2T"
+    },
+    "scope": "app_mentions:read,incoming-webhook,chat:write",
+    "token_type": "bot",
+    "access_token": "xoxb-4036198872467-4041239707090-rAp3ayzaOgXb7V9SKzJ2qy6p",
+    "bot_user_id": "U041771LT2N",
+    "team": {
+      "id": "T04125URNDR",
+      "name": "Gridsandguides"
+    },
+    "enterprise": null,
+    "is_enterprise_install": false,
+    "incoming_webhook": {
+      "channel": "#grids-and-guides",
+      "channel_id": "C0412QHHK51",
+      "configuration_url": "https://gridsandguides-group.slack.com/services/B0413FU6LT1",
+      "url": "https://hooks.slack.com/services/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"
+    }
+  }
