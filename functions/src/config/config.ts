@@ -9,6 +9,6 @@ export const config = {
     // eslint-disable-next-line max-len
     slackBotToken: "Bearer xapp-1-A041J6MJGSV-4040170956323-597450a6f3513f43f02ba599701a789a21d1f85f70382c2b0a598be64e08217e,",
     // eslint-disable-next-line max-len
-    gngWorkspaceBotToken: "Bearer xoxb-4036198872467-4041239707090-rAp3ayzaOgXb7V9SKzJ2qy6p",
+    gngWorkspaceBotToken: "Bearer xoxb-4036198872467-4041239707090-GAsdxPW2gBZbWczvPElvnbRy",
     appWebHookUrl: "https://hooks.slack.com/services/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",
 };
