@@ -7,189 +7,9 @@ export const actions = async (request: Request) => {
     // const eventType = request.event.type;
     // const user_id = request.event.user,
     const parsedData = JSON.parse(request.payload);
-
-    if (
-        parsedData.actions &&
-        parsedData.actions[0] &&
-        parsedData.actions[0].selected_option
-    ) {
-        const publish = await axios.post(
-            "https://slack.com/api/views.publish",
-            {
-            // Use the user ID associated with the event
-                user_id: parsedData.user.id,
-                view: {
-                    // Home tabs must be enabled in your app configuration page under "App Home"
-                    type: "home",
-                    blocks: [
-                        {
-                            type: "section",
-                            block_id: "section678",
-                            text: {
-                                type: "mrkdwn",
-                                text: "Pick items from the list",
-                            },
-                            accessory: {
-                                action_id: "select_city",
-                                type: "external_select",
-                                placeholder: {
-                                    type: "plain_text",
-                                    text: "Select items",
-                                },
-                                min_query_length: 3,
-                            },
-                        },
-                        {
-                            type: "divider",
-                        },
-                        {
-                            type: "section",
-                            text: {
-                                type: "mrkdwn",
-                                text: "*<fakeLink.toHotelPage.com|Windsor Court Hotel>*\n★★★★★\n$340 per night\nRated: 9.4 - Excellent",
-                            },
-                            accessory: {
-                                type: "image",
-                                image_url:
-                    "https://api.slack.com/img/blocks/bkb_template_images/tripAgent_1.png",
-                                alt_text: "Windsor Court Hotel thumbnail",
-                            },
-                        },
-                        {
-                            type: "context",
-                            elements: [
-                                {
-                                    type: "image",
-                                    image_url:
-                        "https://api.slack.com/img/blocks/bkb_template_images/tripAgentLocationMarker.png",
-                                    alt_text: "Location Pin Icon",
-                                },
-                                {
-                                    type: "plain_text",
-                                    emoji: true,
-                                    text: "Location: French Quarter",
-                                },
-                            ],
-                        },
-                        {
-                            type: "actions",
-                            elements: [
-                                {
-                                    type: "button",
-                                    text: {
-                                        type: "plain_text",
-                                        text: "Book Now",
-                                        emoji: true,
-                                    },
-                                    value: "hall_1",
-                                    action_id: "actionId-0",
-                                },
-                            ],
-                        },
-                        {
-                            type: "divider",
-                        },
-                        {
-                            type: "section",
-                            text: {
-                                type: "mrkdwn",
-                                text: "*<fakeLink.toHotelPage.com|The Ritz-Carlton New Orleans>*\n★★★★★\n$340 per night\nRated: 9.1 - Excellent",
-                            },
-                            accessory: {
-                                type: "image",
-                                image_url:
-                    "https://api.slack.com/img/blocks/bkb_template_images/tripAgent_2.png",
-                                alt_text: "Ritz-Carlton New Orleans thumbnail",
-                            },
-                        },
-                        {
-                            type: "context",
-                            elements: [
-                                {
-                                    type: "image",
-                                    image_url:
-                        "https://api.slack.com/img/blocks/bkb_template_images/tripAgentLocationMarker.png",
-                                    alt_text: "Location Pin Icon",
-                                },
-                                {
-                                    type: "plain_text",
-                                    emoji: true,
-                                    text: "Location: French Quarter",
-                                },
-                            ],
-                        },
-                        {
-                            type: "actions",
-                            elements: [
-                                {
-                                    type: "button",
-                                    text: {
-                                        type: "plain_text",
-                                        text: "Book Now",
-                                        emoji: true,
-                                    },
-                                    value: "hall_2",
-                                    action_id: "actionId-0",
-                                },
-                            ],
-                        },
-                        {
-                            type: "divider",
-                        },
-                        {
-                            type: "section",
-                            text: {
-                                type: "mrkdwn",
-                                text: "*<fakeLink.toHotelPage.com|Omni Royal Orleans Hotel>*\n★★★★★\n$419 per night\nRated: 8.8 - Excellent",
-                            },
-                            accessory: {
-                                type: "image",
-                                image_url:
-                    "https://api.slack.com/img/blocks/bkb_template_images/tripAgent_3.png",
-                                alt_text: "Omni Royal Orleans Hotel thumbnail",
-                            },
-                        },
-                        {
-                            type: "context",
-                            elements: [
-                                {
-                                    type: "image",
-                                    image_url:
-                        "https://api.slack.com/img/blocks/bkb_template_images/tripAgentLocationMarker.png",
-                                    alt_text: "Location Pin Icon",
-                                },
-                                {
-                                    type: "plain_text",
-                                    emoji: true,
-                                    text: "Location: French Quarter",
-                                },
-                            ],
-                        },
-                        {
-                            type: "actions",
-                            elements: [
-                                {
-                                    type: "button",
-                                    text: {
-                                        type: "plain_text",
-                                        text: "Book Now",
-                                        emoji: true,
-                                    },
-                                    value: "hall_3",
-                                    action_id: "actionId-0",
-                                },
-                            ],
-                        },
-                    ],
-                },
-            },
-            {
-                headers: {
-                    Authorization: config.gngWorkspaceBotToken,
-                },
-            }
-        );
-        console.log(publish.data);
+    console.log(parsedData);
+    if (parsedData.view && parsedData.view.state && parsedData.view.state.values) {
+        console.log("value: ", parsedData.view.state.values);
     }
 
     if (
@@ -197,6 +17,8 @@ export const actions = async (request: Request) => {
         parsedData.actions[0] &&
         parsedData.actions[0].value
     ) {
+        const teamId = parsedData.team.id;
+        console.log("team id", teamId);
         await axios.post(
             "https://slack.com/api/views.open",
             {
@@ -318,8 +140,74 @@ export const actions = async (request: Request) => {
         });
     }
 
-    return {
-        "response_action": "clear",
-    };
+    await axios.post(
+        "https://slack.com/api/chat.postMessage",
+        {
+            channel: "U040MMKRX2T",
+            blocks: [
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "------------------------------------------\nYour Booking Done\n Your Booking ID: ABDGC3214",
+                    },
+                    "accessory": {
+                        "type": "image",
+                        "image_url": "https://i.imgur.com/2J2wnbe.png",
+                        "alt_text": "Windsor Court Hotel thumbnail",
+                    },
+                },
+            ],
+        },
+        {
+            headers: {
+                Authorization: config.gngWorkspaceBotToken,
+            },
+        }
+    );
+
+    await axios.post(
+        "https://slack.com/api/views.open",
+        {
+            trigger_id: parsedData.trigger_id,
+            view: {
+                type: "modal",
+                callback_id: "booking-done",
+                title: {
+                    type: "plain_text",
+                    text: "Book Hall 1 - Done",
+                    emoji: true,
+                },
+                close: {
+                    type: "plain_text",
+                    text: "Cancel",
+                    emoji: true,
+                },
+                blocks: [
+                    {
+                        "type": "section",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": "------------------------------------------\nYour Booking Done\n Your Booking ID: ABDGC3214",
+                        },
+                        "accessory": {
+                            "type": "image",
+                            "image_url": "https://i.imgur.com/2J2wnbe.png",
+                            "alt_text": "Windsor Court Hotel thumbnail",
+                        },
+                    },
+                ],
+            },
+        },
+        {
+            headers: {
+                Authorization: config.gngWorkspaceBotToken,
+            },
+        }
+    );
+
+    // return {
+    //     "response_action": "clear",
+    // };
 };
 

@@ -9,6 +9,7 @@ import {Request} from "./types";
 import crypto from "crypto-js";
 import tsscmp from "tsscmp";
 import qs from "qs";
+// import {stringify, toJSON} from "flatted";
 
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
@@ -24,10 +25,12 @@ export const callback = functions.https.onRequest(async (request, response) => {
 });
 // action
 export const action = functions.https.onRequest(async (request, response) => {
+    // console.log(JSON.stringify(request));
     const legit = legitSlackRequest(request, false);
     if (!legit) {
         response.send({});
     } else {
+        // console.log(request.body);
         const data = request.body;
         const result =await actions(data);
         response.send(result);
@@ -36,10 +39,12 @@ export const action = functions.https.onRequest(async (request, response) => {
 // event
 // eslint-disable-next-line max-len
 export const event = functions.https.onRequest(async (request, response) => {
+    // console.log(stringify(toJSON(request)));
     const legit = legitSlackRequest(request, true);
     if (!legit) {
         response.send({});
     } else {
+        // console.log(request.body);
         const data = request.body as unknown as Request;
         // functions.logger.info("Hello logs!", data);
         if (data.type === "url_verification") {
@@ -52,6 +57,7 @@ export const event = functions.https.onRequest(async (request, response) => {
 });
 // options
 export const options = functions.https.onRequest(async (request, response) => {
+    // console.log(JSON.stringify(request));
     // eslint-disable-next-line new-cap
     const legit = legitSlackRequest(request, false);
     if (!legit) {
